@@ -3,7 +3,7 @@ import Card from "../UI/Card";
 import Button from "../UI/Button";
 import styles from "./AddUser.module.css";
 
-const AddUser = () => {
+const AddUser = ({ onAddUser }) => {
   const [userName, setUserName] = useState("");
   const [userAge, setUserAge] = useState("");
 
@@ -17,13 +17,21 @@ const AddUser = () => {
 
   const addUserHandler = (event) => {
     event.preventDefault(event.target.value);
-    if(userName.trim().length === 0 || userAge.trim().length === 0 ){
+    if (userName.trim().length === 0 || userAge.trim().length === 0) {
       return;
     }
-    if(+userAge < 1) return;
+    if (+userAge < 1) return;
+
+    const user = {
+      name: userName,
+      age: userAge,
+    };
+    
+    onAddUser(user);
     setUserName("");
     setUserAge("");
   };
+
   return (
     <Card className={styles.input}>
       <form onSubmit={addUserHandler}>
